@@ -8,19 +8,14 @@ import * as vscode from 'vscode';
 const themeModule = require('jsonresume-theme-lumen');
 
 
-const cats = {
-  'Coding Cat': 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
-  'Compiling Cat': 'https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif'
-};
-
 export function activate(context: vscode.ExtensionContext) {
   vscode.window.showInformationMessage('JSON Resume Extension activated!');
   context.subscriptions.push(
-    vscode.commands.registerCommand('catCoding.start', () => {
+    vscode.commands.registerCommand('jsonresume.preview', () => {
       // Create and show a new webview
       const panel = vscode.window.createWebviewPanel(
-        'catCoding', // Identifies the type of the webview. Used internally
-        'Cat Coding', // Title of the panel displayed to the user
+        'jsonresume', // Identifies the type of the webview. Used internally
+        'Resume Preview', // Title of the panel displayed to the user
         vscode.ViewColumn.One, // Editor column to show the new webview panel in.
         {} // Webview options. More on these later.
       );
