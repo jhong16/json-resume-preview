@@ -37,7 +37,10 @@
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
     "eslint": "^9.36.0",
-    "jsonresume-theme-lumen": "github:jhong16/jsonresume-theme-lumen",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "jsonresume-theme-lumen": "github:jhong16/jsonresume-theme-lumen"
   }
 }

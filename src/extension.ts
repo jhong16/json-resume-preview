@@ -14,6 +14,7 @@ const cats = {
 };
 
 export function activate(context: vscode.ExtensionContext) {
+  vscode.window.showInformationMessage('JSON Resume Extension activated!');
   context.subscriptions.push(
     vscode.commands.registerCommand('catCoding.start', () => {
       // Create and show a new webview

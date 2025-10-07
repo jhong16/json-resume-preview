@@ -1,6 +1,6 @@
 # json-resume-preview README
 
-This is the README for your extension "json-resume-preview". After writing up a brief description, we recommend including the following sections.
+This VS Code extension renders JSON Resumes using jsonresume-theme-lumen.
 
 ## Features
 
