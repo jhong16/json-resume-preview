@@ -2,6 +2,12 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+// Import the installed JSON Resume theme
+// Make sure TypeScript knows the type; if no types exist, use `any`
+// @ts-ignore
+const themeModule = require('jsonresume-theme-lumen');
+
+
 const cats = {
   'Coding Cat': 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
   'Compiling Cat': 'https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif'
@@ -18,43 +24,28 @@ export function activate(context: vscode.ExtensionContext) {
         {} // Webview options. More on these later.
       );
 
-      let iteration = 0;
-      const updateWebview = () => {
-        const cat = iteration++ % 2 ? 'Compiling Cat' : 'Coding Cat';
-        panel.title = cat;
-        panel.webview.html = getWebviewContent(cat);
-      };
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			vscode.window.showErrorMessage('No active editor found.');
+			return;
+		}
 
-      // Set initial content
-      updateWebview();
+		const document = editor.document;
+		if (document.languageId !== 'json') {
+			vscode.window.showErrorMessage('Active file is not a JSON file.');
+			return;
+		}
 
-      // And schedule updates to the content every second
-      const interval = setInterval(updateWebview, 1000);
-
-	  panel.onDidDispose(
-        () => {
-          // When the panel is closed, cancel any future updates to the webview content
-          clearInterval(interval);
-        },
-        null,
-        context.subscriptions
-      );
+		// 1️⃣ Get JSON content from the current editor
+		const resumeJSON = JSON.parse(document.getText());
+	  	panel.webview.html = getWebviewContent(resumeJSON);
     })
   );
 }
 
-function getWebviewContent(cat: keyof typeof cats) {
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Coding</title>
-</head>
-<body>
-    <img src="${cats[cat]}" width="300" />
-</body>
-</html>`;
+function getWebviewContent(resumeJSON: any) {
+  const html = themeModule.render(resumeJSON);
+  return html;
 }
 // This method is called when your extension is deactivated
 export function deactivate() {}
