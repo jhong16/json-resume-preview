@@ -1,7 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import Ajv from "ajv";
+import Ajv, { ErrorObject, ValidateFunction } from "ajv";
+import addFormats from "ajv-formats";
 
 // Import the installed JSON Resume theme
 // Make sure TypeScript knows the type; if no types exist, use `any`
@@ -37,8 +38,9 @@ export function activate(context: vscode.ExtensionContext) {
       // Setup the validation against the custom schema
       const ajv = new Ajv({
         allErrors: true, // continue collecting all validation issues
-        jsonPointers: true, // required for Ajv v6 path syntax
+        strict: true,
       });
+      addFormats(ajv); // enables "email", "uri", "date-time", etc.
 
       // Async function to load schema from GitHub
       const fetch = await import("node-fetch").then(mod => mod.default);
@@ -115,13 +117,13 @@ function getWebviewContent(resumeJSON: any) {
   return html;
 }
 
-const renderValidationErrors = (errors: Ajv.ErrorObject[] | null | undefined) => `
+const renderValidationErrors = (errors: ErrorObject[] | null | undefined) => `
   <html>
     <body style="font-family: monospace; background: #1e1e1e; color: #ffcc00; padding: 1rem;">
       <h2>⚠️ Schema validation failed</h2>
       <ul>
         ${errors?.map(err => `
-          <li><b>${err.dataPath || '/'}</b>: ${err.message}</li>
+          <li><b>${err.instancePath || '/'}</b>: ${err.message}</li>
         `).join("")}
       </ul>
     </body>

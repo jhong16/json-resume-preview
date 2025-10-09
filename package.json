@@ -3,6 +3,10 @@
   "displayName": "JSON Resume Preview",
   "description": "A JSON Resume Preview",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhong16/json-resume-preview.git"
+  },
   "engines": {
     "vscode": "^1.104.0"
   },
@@ -36,13 +40,14 @@
     "@typescript-eslint/parser": "^8.45.0",
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
-    "ajv": "^6.12.6",
     "eslint": "^9.36.0",
-    "node-fetch": "^3.3.2",
     "typescript": "^5.9.3",
     "vsce": "^2.15.0"
   },
   "dependencies": {
-    "jsonresume-theme-lumen": "github:jhong16/jsonresume-theme-lumen"
+    "ajv": "^8.17.1",
+    "ajv-formats": "^2.1.1",
+    "jsonresume-theme-lumen": "github:jhong16/jsonresume-theme-lumen",
+    "node-fetch": "^3.3.2"
   }
 }
